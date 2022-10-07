@@ -1,47 +1,5 @@
--------------------------------------------------
--- Möan.lua
--- A simple messagebox system for LÖVE <br><br> Forum link: 
--- [https://love2d.org/forums/viewtopic.php?f=5&t=84110](https://love2d.org/forums/viewtopic.php?f=5&t=84110)
--- <br>GitHub: [https://github.com/twentytwoo/Moan.lua](https://github.com/twentytwoo/Moan.lua)
--- <br><br><img src="https://github.com/twentytwoo/Moan.lua/raw/master/preview.gif" style="max-width: 100%">
--- @usage Moan.speak("Moan", {"W-Wh--What are you doing here?!", "Stay away from me!"})
---
--- @module Moan
--- @author May W.
--- @license MIT
--- @copyright twentytwoo, 2017
--- @todo
--- Add simple theming interface
--- Improves Auto-wrap algo. to calculate string length (in px) based on character width
--- Rich text, i.e. coloured/bold/italic text
--- Possibly go towards a more OO approach
-
--------------------------------------------------
-
 local utf8 = require("utf8")
 
--------------------------------------------------
--- Main configuration table
---
--- @table Moan
--- @string indicatorCharacter Next message indicator, (default `">"`)
--- @string optionCharacter Option selection prefix, (default `"- "`)
--- @int indicatorDelay Time between next message indicator being toggled, (default `25`)
--- @string selectButton Key that advanced to next message, (default `"space"`)
--- @int typeSpeed Delay between character being printed via the typewriter
--- @bool debug Display debug information
--- @tparam table allMsgs Contains messages (if not overriden by Moan.defMsgContainer())
--- @tparam table history Contains all messages that have been called
--- @string currentMessage Current full message
--- @int currentMsgInstance Current Moan.speak() instance+
--- @int currentMsgKey Current key of current instances messages table
--- @int currentOption Current key of selected option table
--- @param userdata currentImage Current messagebox Love image object
--- @string _VERSION Moan version
--- @string _URL Moan repo url
--- @string _DESCRIPTION Short description of the library
--- @tparam table UI UI configuration
--------------------------------------------------
 Moan = {
   indicatorCharacter = ">",
   optionCharacter = "=> ",
@@ -58,11 +16,6 @@ Moan = {
   currentMsgKey= 1,
   currentOption = 1,
   currentImage = nil,
-
-  _VERSION     = '0.2.9',
-  _URL         = 'https://github.com/twentytwoo/Moan.lua',
-  _DESCRIPTION = 'A simple messagebox system for LÖVE',
-
   UI = {
     titleBoxPos = "left",
     messageboxPos = "bottom",
@@ -85,29 +38,6 @@ if Moan.font == nil then
   Moan.font = defaultFont
 end
 
--------------------------------------------------
--- Message instance constructor
---
--- @string title Title box text, default colour
--- <li><code>title:</code>(<a href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a>)</li>
--- <ul style="margin-left: 20px">
---  <li><code>[1]:</code> (<a href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>) Messagebox title text</li>
---  <li><code>[2]:</code> (<a href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a>) Messagebox title colour; <code>{255, 100, 10}</code></li>
---</ul>
--- @tparam table messages
--- @tparam table config
---
--- @usage
--- avatar = love.graphics.newImage("image.png")
--- Moan.speak({"Mike", {0,255,0}}, {"Message one", "two--and", "Here's those options!"}, {x=10, y=10, image=avatar,
---                   onstart=function() camera:move(100, 20) end, oncomplete=function() Moan.setSpeed("slow") end,
---                   options={
---                    {"Option one",  function() option1() end},
---                    {"Option two",  function() option2() end},
---                    {"Option three",function() option3() end}}
---                    {"Option n...", function() optionn() end}}
---                   })
--------------------------------------------------
 function Moan.speak(title, messages, config)
   if type(title) == "table" then
     titleColor = title[2]
