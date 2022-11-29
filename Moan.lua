@@ -241,7 +241,7 @@ function Moan.draw()
     local scale = 0.26
     local padding = 10
 
-    local boxH = 118
+    local boxH = (love.graphics.getHeight()/4)-(2*padding)
     local boxW = love.graphics.getWidth()-(2*padding)
     local boxX = padding
     local boxY = love.graphics.getHeight()-(boxH+padding)
