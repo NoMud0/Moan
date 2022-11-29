@@ -239,18 +239,18 @@ function Moan.draw()
   love.graphics.setDefaultFilter( "nearest", "nearest")
   if Moan.showingMessage then
     local scale = 0.26
-    local padding = 10
+    local margin = 10
 
-    local boxH = (love.graphics.getHeight()/4)-(2*padding)
-    local boxW = love.graphics.getWidth()-(2*padding)
-    local boxX = padding
-    local boxY = love.graphics.getHeight()-(boxH+padding)
+    local boxH = (love.graphics.getHeight()/4)-(2*margin)
+    local boxW = love.graphics.getWidth()-(2*margin)
+    local boxX = margin
+    local boxY = love.graphics.getHeight()-(boxH+margin)
     if Moan.UI.messageboxPos == "top" then boxY = 10 end
 
     local fontHeight = Moan.font:getHeight(" ")
 
-    local imgX = (boxX+padding)*(1/scale)
-    local imgY = (boxY+padding)*(1/scale)
+    local imgX = (boxX+margin)*(1/scale)
+    local imgY = (boxY+margin)*(1/scale)
     if type(Moan.currentImage) == "userdata" then
       imgW = Moan.currentImage:getWidth()
       imgH = Moan.currentImage:getHeight()
@@ -260,30 +260,30 @@ function Moan.draw()
     end
 
     if Moan.UI.imagePos == "right" then
-      imgX = ((boxX+boxW)*(1/scale))-(imgW+padding*(1/scale))
+      imgX = ((boxX+boxW)*(1/scale))-(imgW+margin*(1/scale))
     end
 
-    local titleBoxW = Moan.font:getWidth(Moan.currentTitle)+(2*padding)
-    local titleBoxH = fontHeight+padding
+    local titleBoxW = Moan.font:getWidth(Moan.currentTitle)+(2*margin)
+    local titleBoxH = fontHeight+margin
     local titleBoxX = boxX
     -- overrides
-    local titleBoxY = boxY-titleBoxH-(padding/2)
+    local titleBoxY = boxY-titleBoxH-(margin/2)
     if Moan.UI.messageboxPos == "top" then
-      titleBoxY = boxY+boxH+padding
+      titleBoxY = boxY+boxH+margin
     end
     if Moan.UI.titleBoxPos == "right" then titleBoxX = boxX+boxW-(titleBoxW) end
 
     local titleColor = Moan.allMsgs[Moan.currentMsgInstance].titleColor
-    local titleX = titleBoxX+padding
+    local titleX = titleBoxX+margin
     local titleY = titleBoxY+2
 
-    local textX = (imgX+imgW)/(1/scale)+padding
+    local textX = (imgX+imgW)/(1/scale)+margin
     local textY = boxY
     local msgTextY = textY+Moan.font:getHeight()/1.2
-    local msgLimit = boxW-(imgW/(1/scale))-(4*padding)
-    if Moan.UI.imagePos == "right" then textX = boxX+padding end
+    local msgLimit = boxW-(imgW/(1/scale))-(4*margin)
+    if Moan.UI.imagePos == "right" then textX = boxX+margin end
 
-    local optionsY = textY+Moan.font:getHeight(printedText)-(padding/1.6)
+    local optionsY = textY+Moan.font:getHeight(printedText)-(margin/1.6)
     local optionsSpace = fontHeight/1.5
 
     local fontColour = { 255, 255, 255, 255 }
@@ -321,15 +321,15 @@ function Moan.draw()
     -- Message options (when shown)
     if Moan.showingOptions and typing == false then
       for k, option in pairs(Moan.allMsgs[Moan.currentMsgInstance].options) do
-        -- First option has no Y padding...
-        love.graphics.print(option[1], textX+padding, optionsY+((k-1)*optionsSpace))
+        -- First option has no Y margin...
+        love.graphics.print(option[1], textX+margin, optionsY+((k-1)*optionsSpace))
       end
     end
 
     -- Next message/continue indicator
     if Moan.showIndicator then
       if not (Moan.UI.imagePos == "right" and type(Moan.currentImage) == "userdata") then
-        love.graphics.print(Moan.indicatorCharacter, boxX+boxW-(2.5*padding), boxY+boxH-(padding/2)-fontHeight)
+        love.graphics.print(Moan.indicatorCharacter, boxX+boxW-(2.5*margin), boxY+boxH-(margin/2)-fontHeight)
       end
     end
   end
